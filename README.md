@@ -108,7 +108,7 @@ soundvision/
 ```
 
 <div align="center">
-Made with 💡 for Engineering Education and Social Impact.
+Made with for Engineering Education and Social Impact.
 <br>
 Tiburski, H. B. | Alves, M. D. C. | Sausen, J. P. | de Campos, M.
 </div>
