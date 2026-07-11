@@ -42,21 +42,10 @@ Designed to be accessible (under US$ 30 BOM), replicable, and highly effective f
 
 SoundVision utilizes a non-blocking Finite State Machine (FSM) to ensure real-time performance with a deterministic latency of ~56 ms:
 
-```text
-User Environment
-       │
-       ▼
-  3x HC-SR04 Sensors ──→  Acquires Frontal, Left, and Right distances
-       │
-       ▼
- ESP32-C3 Microcontroller ──→  FSM Processing & Distance-to-Time Mapping
-       │
-     ┌─┴─┐
-     │   │
-     ▼   ▼
-  Spatial   IoT Dashboard ──→ Real-time telemetry via WebSockets
-  Buzzers   (Wi-Fi AP)        for pedagogical diagnostics
-```
+<div align="center">
+  <img src="docs/fsm_diagram.png" alt="Finite State Machine Architecture" width="600" />
+  <p><i>System Architecture and Data Flow</i></p>
+</div>
 
 ## Features
 
