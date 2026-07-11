@@ -84,7 +84,7 @@ User Environment
 
 ```bash
 # To clone the firmware and upload via PlatformIO or Arduino IDE:
-git clone https://github.com/soundvision-pbl/soundvision.git
+git clone https://github.com/theHerick/soundvision.git
 cd soundvision/firmware
 ```
 
