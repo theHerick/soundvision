@@ -15,89 +15,89 @@
     ╚═══╝  ╚═╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 </pre>
 
-<p><b>Low-Cost Wearable Assistive Device · Tri-Directional Sensing · IoT Enabled</b></p>
+<p><b>Dispositivo Vestível Assistivo de Baixo Custo · Sensoriamento Tridirecional · Habilitado para IoT</b></p>
 
-<img src="https://img.shields.io/badge/Status-Active-brightgreen?logo=git" alt="Status" />
+<img src="https://img.shields.io/badge/Status-Ativo-brightgreen?logo=git" alt="Status" />
 <img src="https://img.shields.io/badge/MCU-ESP32--C3-red?logo=espressif" alt="ESP32" />
-<img src="https://img.shields.io/badge/Hardware-HC--SR04-blue" alt="Sensors" />
-<img src="https://img.shields.io/badge/license-MIT-purple" alt="License" />
+<img src="https://img.shields.io/badge/Hardware-HC--SR04-blue" alt="Sensores" />
+<img src="https://img.shields.io/badge/licen%C3%A7a-MIT-purple" alt="License" />
 
 </div>
 
 ---
 
-## What is SoundVision?
+## O que é o SoundVision?
 
-**SoundVision** is an open-source, low-cost wearable assistive technology designed to aid the mobility of visually impaired individuals. It also serves as a robust pedagogical platform for Project-Based Learning (PBL) in engineering education.
+O **SoundVision** é uma tecnologia assistiva vestível, de código aberto e baixo custo, projetada para auxiliar a mobilidade de pessoas com deficiência visual. Ele também serve como uma robusta plataforma pedagógica para Aprendizagem Baseada em Projetos (PBL) no ensino de engenharia.
 
-Stop relying on single-sensor solutions with massive blind spots. SoundVision uses a tri-directional array of ultrasonic sensors mounted on eyeglass frames to provide comprehensive frontal and lateral spatial awareness.
+Chega de depender de soluções com um único sensor que deixam enormes zonas cegas. O SoundVision utiliza um arranjo tridirecional de sensores ultrassônicos acoplados a uma armação de óculos para fornecer percepção espacial completa, tanto frontal quanto lateral.
 
 ```text
-Obstacle → SoundVision (Sensors + ESP32) → Spatial Auditory Feedback
+Obstáculo → SoundVision (Sensores + ESP32) → Feedback Auditivo Espacial
 ```
 
-Designed to be accessible (under US$ 30 BOM), replicable, and highly effective for both end-users and engineering students.
+Projetado para ser acessível (custo de componentes inferior a US$ 30 / R$ 150), replicável e altamente eficaz tanto para os usuários finais quanto para os estudantes de engenharia.
 
-## How it Works
+## Como Funciona
 
-SoundVision utilizes a non-blocking Finite State Machine (FSM) to ensure real-time performance with a deterministic latency of ~56 ms:
+O SoundVision utiliza uma Máquina de Estados Finitos (FSM) não bloqueante para garantir processamento em tempo real com uma latência determinística de ~56 ms:
 
 <div align="center">
-  <img src="docs/fsm_diagram.png" alt="Finite State Machine Architecture" width="600" />
-  <p><i>System Architecture and Data Flow</i></p>
+  <img src="docs/fsm_diagram.png" alt="Arquitetura da Máquina de Estados Finitos" width="600" />
+  <p><i>Arquitetura do Sistema e Fluxo de Dados</i></p>
 </div>
 
-## Features
+## Funcionalidades
 
-*   **Tri-Directional Array** — Eliminates lateral blind spots using three independent ultrasonic zones.
-*   **Real-Time Processing** — Custom FSM architecture ensures ~56ms cycle time (17.8 Hz) for instant feedback.
-*   **Spatial Auditory Feedback** — Distinct tonal frequencies for each direction (Left, Center, Right) allow intuitive navigation without headphones.
-*   **IoT Telemetry Dashboard** — Built-in Wi-Fi Access Point hosts a real-time WebSocket dashboard to monitor sensor states and configure parameters.
-*   **Extremely Low Cost** — Total Bill of Materials (BOM) under US$ 30, making it ideal for large-scale academic replication.
-*   **Wearable & Ergonomic** — Lightweight PLA 3D-printed structure designed to attach to standard eyeglass frames.
+*   **Arranjo Tridirecional** — Elimina zonas cegas laterais utilizando três zonas ultrassônicas independentes.
+*   **Processamento em Tempo Real** — A arquitetura FSM customizada garante um tempo de ciclo de ~56ms (17,8 Hz) para feedback instantâneo.
+*   **Feedback Auditivo Espacial** — Frequências tonais distintas para cada direção (Esquerda, Centro, Direita) permitem uma navegação intuitiva sem a necessidade de fones de ouvido.
+*   **Dashboard de Telemetria IoT** — O Access Point Wi-Fi integrado hospeda um dashboard em tempo real via WebSockets para monitorar o estado dos sensores e configurar parâmetros.
+*   **Custo Extremamente Baixo** — O custo total da Lista de Materiais (BOM) é inferior a US$ 30, sendo ideal para replicação em larga escala em ambientes acadêmicos.
+*   **Vestível e Ergonômico** — Estrutura leve em PLA impressa em 3D, projetada para se acoplar a armações de óculos convencionais.
 
-## Tech Stack
+## Stack de Tecnologias
 
-| Component | Technology |
+| Componente | Tecnologia |
 |---|---|
-| **Microcontroller** | ESP32-C3 Mini (RISC-V 32-bit) |
-| **Sensors** | 3x HC-SR04 Ultrasonic Transducers |
+| **Microcontrolador** | ESP32-C3 Mini (RISC-V 32-bit) |
+| **Sensores** | 3x Transdutores Ultrassônicos HC-SR04 |
 | **Firmware** | C++ (ESP-IDF / Arduino Core) |
-| **IoT Dashboard** | HTML, Vanilla JS, WebSockets |
-| **Power** | 1000mAh LiPo + TP4056 Charging Module |
-| **Structure** | 3D Printed PLA |
+| **Dashboard IoT** | HTML, Vanilla JS, WebSockets |
+| **Alimentação** | LiPo 1000mAh + Módulo de Carga TP4056 |
+| **Estrutura** | PLA Impresso em 3D |
 
-## Assembly & Deployment
+## Montagem e Implantação
 
-**SoundVision** is optimized for quick academic deployment and experimentation.
+O **SoundVision** é otimizado para implantação e experimentação acadêmica rápida.
 
 ```bash
-# To clone the firmware and upload via PlatformIO or Arduino IDE:
+# Para clonar o firmware e fazer o upload via PlatformIO ou Arduino IDE:
 git clone https://github.com/theHerick/soundvision.git
 cd soundvision/firmware
 ```
 
-**Hardware Requirements:**
+**Requisitos de Hardware:**
 - 1x ESP32-C3 Mini
 - 3x HC-SR04
-- 3x Piezoelectric Buzzers
-- 1x TP4056 Module + 3.7V LiPo Battery
-- Standard 3D Printer for the `.stl` frame files.
+- 3x Buzzers Piezoelétricos
+- 1x Módulo TP4056 + Bateria LiPo 3.7V
+- Impressora 3D padrão para os arquivos de armação `.stl`.
 
-## Project Structure
+## Estrutura do Projeto
 
 ```text
 soundvision/
-├── firmware/           # C++ Source code for ESP32-C3 (FSM + WebSockets)
+├── firmware/           # Código fonte em C++ para ESP32-C3 (FSM + WebSockets)
 ├── hardware/
-│   ├── schematics/     # Circuit diagrams and wiring
-│   └── 3d_models/      # .STL files for the 3D printed eyeglass frame
-├── docs/               # Pedagogical guides and PBL lesson plans
-└── README.md           # Project overview
+│   ├── schematics/     # Diagramas de circuito e esquemas de ligação
+│   └── 3d_models/      # Arquivos .STL para a armação dos óculos em 3D
+├── docs/               # Guias pedagógicos e planos de aula (PBL)
+└── README.md           # Visão geral do projeto
 ```
 
 <div align="center">
-Made with 💡 for Engineering Education and Social Impact.
+Feito com 💡 para a Educação em Engenharia e Impacto Social.
 <br>
 Tiburski, H. B. | Alves, M. D. C. | Sausen, J. P. | de Campos, M.
 </div>
