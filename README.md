@@ -43,19 +43,19 @@ Projetado para ser acessível (custo de componentes inferior a US$ 30 / R$ 150),
 O SoundVision utiliza uma Máquina de Estados Finitos (FSM) não bloqueante para garantir processamento em tempo real com uma latência determinística de ~56 ms:
 
 ```mermaid
-stateDiagram-v2
-    [*] --> IniciaSiteWeb : Ao Ligar
-    IniciaSiteWeb --> IniciaSensores
-    IniciaSensores --> ReadDistance
+flowchart TD
+    A((Ao Ligar)) --> B(Inicia Site Web)
+    B --> C(Inicia Sensores)
     
-    ReadDistance --> ReadDistance : aguarda (se não)
-    ReadDistance --> CalculaBuzzer : retorna distância
-    CalculaBuzzer --> ReadDistance : ciclo contínuo
+    C --> D("readDistance();<br>Sensor retorna a<br>distância")
     
-    IniciaSiteWeb : Inicia Dashboard Web
-    IniciaSensores : Inicia Sensores HC-SR04
-    ReadDistance : readDistance()
-    CalculaBuzzer : Mapeia distância e aciona Buzzer
+    D -->|se não| D
+    D -->|"se:<br>0 < d ≤ 400 cm"| E("Calcula conforme<br>eq. (2) e aciona<br>Buzzer")
+    
+    %% Estilização para ficar parecido com as caixas azuis do LaTeX
+    classDef default fill:#f0f5ff,stroke:#0000ff,stroke-width:1px,color:#000;
+    classDef startNode fill:none,stroke:none,font-weight:bold;
+    class A startNode;
 ```
 
 ## Funcionalidades
