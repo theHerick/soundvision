@@ -93,6 +93,7 @@ soundvision/
 │   ├── schematics/     # Diagramas de circuito e esquemas de ligação
 │   └── 3d_models/      # Arquivos .STL para a armação dos óculos em 3D
 ├── docs/               # Guias pedagógicos e planos de aula (PBL)
+├── LICENCE
 └── README.md           # Visão geral do projeto
 ```
 
