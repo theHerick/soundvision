@@ -20,7 +20,7 @@
 <img src="https://img.shields.io/badge/Status-Ativo-brightgreen?logo=git" alt="Status" />
 <img src="https://img.shields.io/badge/MCU-ESP32--C3-red?logo=espressif" alt="ESP32" />
 <img src="https://img.shields.io/badge/Hardware-HC--SR04-blue" alt="Sensores" />
-<img src="https://img.shields.io/badge/licen%C3%A7a-MIT-purple" alt="License" />
+<img src="https://img.shields.io/badge/Licen%C3%A7a-Educacional_/_N%C3%A3o--Comercial-purple" alt="License" />
 
 </div>
 
@@ -42,10 +42,21 @@ Projetado para ser acessível (custo de componentes inferior a US$ 30 / R$ 150),
 
 O SoundVision utiliza uma Máquina de Estados Finitos (FSM) não bloqueante para garantir processamento em tempo real com uma latência determinística de ~56 ms:
 
-<div align="center">
-  <img src="docs/fsm_diagram.png" alt="Arquitetura da Máquina de Estados Finitos" width="600" />
-  <p><i>Arquitetura do Sistema e Fluxo de Dados</i></p>
-</div>
+```mermaid
+stateDiagram-v2
+    [*] --> IniciaSiteWeb : Ao Ligar
+    IniciaSiteWeb --> IniciaSensores
+    IniciaSensores --> ReadDistance
+    
+    ReadDistance --> ReadDistance : aguarda (se não)
+    ReadDistance --> CalculaBuzzer : retorna distância
+    CalculaBuzzer --> ReadDistance : ciclo contínuo
+    
+    IniciaSiteWeb : Inicia Dashboard Web
+    IniciaSensores : Inicia Sensores HC-SR04
+    ReadDistance : readDistance()
+    CalculaBuzzer : Mapeia distância e aciona Buzzer
+```
 
 ## Funcionalidades
 
@@ -93,7 +104,6 @@ soundvision/
 │   ├── schematics/     # Diagramas de circuito e esquemas de ligação
 │   └── 3d_models/      # Arquivos .STL para a armação dos óculos em 3D
 ├── docs/               # Guias pedagógicos e planos de aula (PBL)
-├── LICENSE
 └── README.md           # Visão geral do projeto
 ```
 
