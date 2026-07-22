@@ -43,7 +43,7 @@ Projetado para ser acessível (custo de componentes inferior a US$ 30 / R$ 150),
 O SoundVision utiliza uma Máquina de Estados Finitos (FSM) não bloqueante para garantir processamento em tempo real com uma latência determinística de ~56 ms:
 
 ```mermaid
-flowchart TD
+flowchart LR
     A((Ao Ligar)) --> B(Inicia Site Web)
     B --> C(Inicia Sensores)
     
