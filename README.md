@@ -6,7 +6,7 @@ Este repositório contém o sistema completo do dispositivo vestível **SoundVis
 
 ## Visão Geral do Sistema
 
-O firmware é implementado em arquivos de código fonte compatíveis com o **Arduino IDE** (ESP32 Core v2.x e v3.x+). Ele integra:
+O firmware é implementado diretamente nos arquivos de código fonte `.ino` compatíveis com o **Arduino IDE** (ESP32 Core v2.x e v3.x+). O site e a interface de usuário são servidos nativamente pela própria ESP32 (`<WebServer.h>`):
 
 1. **Dualidade Pedagógica / Acessibilidade**:
    - **Visor do Estudante / Educador**: Exibe o radar espacial em tempo real, rastro de obstáculos, telemetria em centímetros e latência determinística em tempo real (~56 ms).
@@ -27,8 +27,8 @@ graph TD
     classDef output fill:#18181b,stroke:#3f3f46,stroke-width:2px,color:#fff,font-weight:bold;
 
     subgraph Assistive_Hardware ["Hardware Vestivel"]
-        C3["ESP32-C3 Radar Ultrassonico<br/>• 3x Sensores HC-SR04<br/>• Latencia ~56ms"]:::hardware
-        CAM["ESP32-CAM Visao IA<br/>• Sensor OV2640<br/>• Push Button GPIO 13<br/>• Hotspot Aberto SoundVision-AP"]:::hardware
+        C3["ESP32-C3 Radar Ultrassonico<br/>• Servidor Web Nativo no .ino<br/>• 3x Sensores HC-SR04<br/>• Latencia ~56ms"]:::hardware
+        CAM["ESP32-CAM Visao IA<br/>• Sensor OV2640<br/>• Push Button GPIO 13<br/>• Captive Portal Configure-Camera"]:::hardware
     end
 
     subgraph Audio_Feedback ["Atuacao Sonora"]
@@ -44,11 +44,12 @@ graph TD
         PLAYWRIGHT["SoundVision Engine (.NET 10)<br/>• Automation Playwright<br/>• Google Lens & HSV Matrix"]:::engine
     end
 
-    subgraph Web_Interface ["Interface Web Acessivel no Celular"]
-        WEB["Painel PWA no Celular<br/>• Sintetizador de Voz Web Speech (Alto-falante do Celular)<br/>• Configurador Dinamico de Wi-Fi"]:::output
+    subgraph Web_Interface ["Interface Web Servida pela ESP32"]
+        WEB["Painel Web Nativo no .ino<br/>• Sintetizador de Voz Web Speech (Celular)<br/>• Captive Portal de Wi-Fi"]:::output
     end
 
     C3 -- "Frequencia Proporcional" --> BUZZER
+    C3 -- "Servidor HTTP Nativo" --> WEB
     CAM -- "HTTPS Base64 Upload" --> FB_REQ
     CAM -- "Notificacao Fila" --> FB_QUEUE
     FB_QUEUE -- "SSE Stream Listener" --> PLAYWRIGHT
@@ -98,15 +99,13 @@ graph TD
 SoundVision/
 ├── firmware/
 │   ├── esp32c3_ultrasonic/
-│   │   └── esp32c3_ultrasonic.ino     # Firmware ESP32-C3 (Radar Ultrassônico & Buzzers)
+│   │   └── esp32c3_ultrasonic.ino     # Firmware ESP32-C3 (Radar Ultrassônico, WebServer Nativo & Buzzers)
 │   └── esp32cam_vision/
-│       └── esp32cam_vision.ino        # Firmware ESP32-CAM (Visão, Wi-Fi NVS & Push Button GPIO 13)
+│       └── esp32cam_vision.ino        # Firmware ESP32-CAM (Visão IA, Captive Portal Configure-Camera & Push Button GPIO 13)
 ├── vision_engine/                      # Motor C# .NET WPF com IA do Google Lens & Color Classifier
 │   ├── SoundVisionEngine.csproj
 │   ├── appsettings.json
 │   └── ...
-├── web/
-│   └── index.html                     # Painel Web PWA Acessível no Celular (Configurador Wi-Fi, Botão & Voz no Celular)
 ├── iniciar_soundvision.bat             # Script de 1-Clique para rodar o motor de IA
 ├── LICENSE                             # Licença MIT Oficial
 └── README.md                           # Documentação Completa do Projeto
@@ -117,7 +116,7 @@ SoundVision/
 ## Configuração e Execução
 
 ### 1. Gravação do Firmware
-- Abra `firmware/esp32c3_ultrasonic/esp32c3_ultrasonic.ino` no Arduino IDE e grave na placa **ESP32-C3**.
+- Abra `firmware/esp32c3_ultrasonic/esp32c3_ultrasonic.ino` no Arduino IDE e grave na placa **ESP32-C3**. O site e o radar são servidos diretamente pela ESP32-C3 no IP da placa.
 - Abra `firmware/esp32cam_vision/esp32cam_vision.ino` no Arduino IDE e grave na placa **AI Thinker ESP32-CAM**.
 
 ### 2. Executar o Motor de Inteligência Artificial
@@ -126,10 +125,9 @@ Execute o inicializador de 1-clique no Windows:
 iniciar_soundvision.bat
 ```
 
-### 3. Painel Web no Celular, Push Button e Voz pelo Celular
-- **Leitura em Voz Alta pelo Celular**: Quando a página `web/index.html` estiver aberta no seu smartphone (conectado ao Wi-Fi ou Vercel), ela usa o **alto-falante nativo do seu celular** para falar a descrição do objeto reconhecido!
-- **Push Button Físico**: Conecte um botão simples entre o **GPIO 13** e o **GND** da ESP32-CAM. Ao apertar o botão, a câmera captura a foto e o seu celular fala o resultado imediatamente.
-- **Troca Dinâmica de Wi-Fi**: Preencha o nome da rede (SSID) e senha na seção **Configurar Wi-Fi da ESP32-CAM** do site no celular. A ESP32-CAM salvará os dados na memória NVS e se conectará à Internet.
+### 3. Configuração de Wi-Fi e Uso
+- **Captive Portal de Wi-Fi (`Configure-Camera`)**: Conecte seu celular na rede Wi-Fi `Configure-Camera` gerada pela ESP32-CAM e acesse `http://192.168.4.1` para preencher o Wi-Fi.
+- **Push Button Físico**: Conecte um botão simples entre o **GPIO 13** e o **GND** da ESP32-CAM para disparar fotos instantaneamente.
 
 ---
 
